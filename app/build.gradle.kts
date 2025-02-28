@@ -71,4 +71,6 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.31.1-alpha")
 
+    implementation ("androidx.media:media:1.6.0")
+
 }
