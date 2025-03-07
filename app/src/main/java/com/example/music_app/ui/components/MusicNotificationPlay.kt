@@ -17,7 +17,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.music_app.MainActivity
 import com.example.music_app.R
-import com.example.music_app.factory.PlayService
+import com.example.music_app.factory.TrackService
 
 @Composable
 fun MusicNotification() {
@@ -47,7 +47,7 @@ fun MusicNotification() {
         PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
     //begin-pause
-    val pauseIntent= Intent(context,PlayService::class.java).apply {
+    val pauseIntent= Intent(context,TrackService::class.java).apply {
         action="ACTION_PAUSE"
     }
     val pausePendingIntent: PendingIntent =

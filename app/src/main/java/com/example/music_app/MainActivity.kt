@@ -1,25 +1,27 @@
 package com.example.music_app
 
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.music_app.destination.CategoryDestination
 import com.example.music_app.destination.HomeDestination
-import com.example.music_app.destination.SongDestination
-import com.example.music_app.ui.screen.CategoryDetailScreen
-import com.example.music_app.ui.screen.HomeScreen
-import com.example.music_app.ui.screen.SongPlayScreen
+import com.example.music_app.destination.TopicDestination
+import com.example.music_app.destination.TrackDestination
+import com.example.music_app.presentation.home.screen.HomeScreen
+import com.example.music_app.presentation.topic_detail.screen.TopicDetailScreen
+import com.example.music_app.presentation.track_play.screen.TrackPlayScreen
+import com.example.music_app.presentation.track_play.screen.TrackPlayViewModel
 import com.example.music_app.ui.theme.Music_AppTheme
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,19 +40,20 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
-                        CategoryDestination.route + "/{${CategoryDestination.categoryId}}",
-                        arguments = listOf(navArgument(CategoryDestination.categoryId) { type = NavType.IntType })
+                        TopicDestination.route +"/{${TopicDestination.category}}"+ "/{${TopicDestination.topicId}}",
+                        arguments = listOf(navArgument(TopicDestination.topicId) { type = NavType.StringType })
                     ) {
-                        val categoryId= requireNotNull(it.arguments?.getInt(CategoryDestination.categoryId)){"Category id is null"}
-                        CategoryDetailScreen(navController,categoryId)
+                        val category = requireNotNull(it.arguments?.getString(TopicDestination.category)){"Category is null"}
+                        val topicId= requireNotNull(it.arguments?.getString(TopicDestination.topicId)){"Topic id is null"}
+                        TopicDetailScreen(navController,topicId,category)
                     }
 
                     composable(
-                        SongDestination.route + "/{${SongDestination.songId}}",
-                        arguments = listOf(navArgument(SongDestination.songId) { type = NavType.IntType })
+                        TrackDestination.route + "/{${TrackDestination.trackId}}",
+                        arguments = listOf(navArgument(TrackDestination.trackId) { type = NavType.StringType })
                         ){
-                        val songId= requireNotNull(it.arguments?.getInt(SongDestination.songId)){"Song id is null"}
-                        SongPlayScreen(navController,songId)
+                        val trackId= requireNotNull(it.arguments?.getString(TrackDestination.trackId)){"Song id is null"}
+                        TrackPlayScreen(navController, trackId.toInt())
                     }
                 }
             }

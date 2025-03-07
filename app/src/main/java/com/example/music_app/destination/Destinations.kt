@@ -8,13 +8,18 @@ object HomeDestination : Destinations {
     override val route = "Home"
 }
 
-object SongDestination : Destinations {
+object TrackDestination : Destinations {
     override val route = "Song"
-    const val songId="songId"
+    const val trackId="trackId"
+    const val category="category"
+    const val topicId="topicId"
+
+
 }
-object CategoryDestination : Destinations {
-    override val route = "Category"
-    const val categoryId="categoryId"
+object TopicDestination : Destinations {
+    override val route = "Topic"
+    const val topicId="topicId"
+    const val category="category"
 
 }
 
