@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.music_app.R
-import com.example.music_app.ui.theme.Shapes
+import com.example.music_app.presentation.theme.Shapes
 
 @Composable
 fun SearchComponent() {

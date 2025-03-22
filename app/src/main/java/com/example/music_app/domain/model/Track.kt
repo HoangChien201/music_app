@@ -2,7 +2,8 @@ package com.example.music_app.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.music_app.R
+import java.io.Serializable
+
 @Entity
 data class Track(
 
@@ -29,4 +30,4 @@ data class Track(
     val waveform:String?=null,
     val audiodownload_allowed:Boolean,
 
-)
+):Serializable

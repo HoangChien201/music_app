@@ -5,5 +5,7 @@ data class HeaderResp (
     val code:Int,
     val error_message:String,
     val warnings:String,
-    val result:Int
+    val result:Int,
+    val result_count:Int,
+    val next:String
 )

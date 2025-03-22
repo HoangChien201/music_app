@@ -24,23 +24,27 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.music_app.R
 import com.example.music_app.destination.TrackDestination
 import com.example.music_app.domain.model.Track
+import com.example.music_app.presentation.theme.GrayText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TrackItem(navHostController: NavHostController, track: Track, category:String, topicId: String){
+fun TrackItem(navHostController: NavHostController, track: Track,active:Boolean=false){
     fun onClick(){
         navHostController.navigate(TrackDestination.route +"/${track.id}")
     }
         Row(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
-                .height(68.dp)
-                .background(Color.Transparent)
+                .height(80.dp)
+                .background( if(active) Color.White.copy(alpha = 0.1f) else Color.Transparent,
+                    shape = RoundedCornerShape(8.dp))
+                .padding(0.dp,8.dp)
                 .clickable(onClick = {onClick()}),
 
 
@@ -53,9 +57,19 @@ fun TrackItem(navHostController: NavHostController, track: Track, category:Strin
                 .height(68.dp)
                 .padding(10.dp, 0.dp, 10.dp, 0.dp),
                 ){
-                if(track.image != null){
+                if(!track.image.isNullOrEmpty()){
                     Image(
                         painter = rememberAsyncImagePainter(track.image),
+                        contentDescription = "song item",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                }else{
+                    Image(
+                        painter = painterResource(R.drawable.classic_category_image),
                         contentDescription = "song item",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
@@ -81,12 +95,12 @@ fun TrackItem(navHostController: NavHostController, track: Track, category:Strin
                         color = Color.White,
                     )
                 }
-//                //name author
-//                Text(
-//                    text = track.,
-//                    fontWeight = FontWeight(300),
-//                    color = GrayText,
-//                    fontSize = 12.sp)
+                //name author
+                Text(
+                    text = track.artist_name ?: "Unknown",
+                    fontWeight = FontWeight(300),
+                    color = GrayText,
+                    fontSize = 12.sp)
             }
             Box(modifier = Modifier.padding(0.dp,20.dp)){
                 Image(

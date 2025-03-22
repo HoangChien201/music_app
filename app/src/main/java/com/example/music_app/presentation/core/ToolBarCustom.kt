@@ -1,4 +1,4 @@
-package com.example.music_app.ui.components
+package com.example.music_app.presentation.core
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

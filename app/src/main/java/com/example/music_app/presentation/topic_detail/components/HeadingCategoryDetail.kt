@@ -23,10 +23,10 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.music_app.R
 import com.example.music_app.domain.model.Topic
-import com.example.music_app.ui.theme.GrayText40
+import com.example.music_app.presentation.theme.GrayText40
 
 @Composable
-fun HeadingCategoryDetail(navHostController: NavHostController,topic: Topic) {
+fun HeadingCategoryDetail(navHostController: NavHostController,topicImg: String,topicName:String) {
     Column(
         modifier = Modifier
             .fillMaxHeight(0.4f)
@@ -37,13 +37,22 @@ fun HeadingCategoryDetail(navHostController: NavHostController,topic: Topic) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        if(topicImg.isNotEmpty()){
+            Image(painter = rememberAsyncImagePainter(topicImg),
+                contentDescription = "the band show",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.7f)
+            )
 
-        Image(painter = rememberAsyncImagePainter(topic.image),
-            contentDescription = "the band show",
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.7f)
-        )
+        }else{
+            Image(painter = painterResource(id = R.drawable.the_band_show),
+                contentDescription = "the band show",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.7f)
+            )
+        }
 
         Column(
             modifier =
@@ -53,10 +62,10 @@ fun HeadingCategoryDetail(navHostController: NavHostController,topic: Topic) {
 
         ) {
             Text(
-                text = topic.name,
+                text = topicName,
                 fontSize = 20.sp,
                 fontWeight = FontWeight(700),
-                color = Color.Black
+                color = Color.White
             )
 
         }

@@ -2,12 +2,14 @@ package com.example.music_app.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.music_app.core.Converters
 
 
 object ArtistRepository{
     val artists= listOf<Artist>(
         Artist(
-            "596751".toInt(),
+            "596751",
             "Sarah C",
          "",
     "2024-11-15",
@@ -33,7 +35,7 @@ object ArtistRepository{
             )),
 
             Artist(
-                "595588".toInt(),
+                "595588",
                 "GK Menage",
                 "https://www.gkmenage.org",
                 "2024-11-15",
@@ -90,12 +92,13 @@ object ArtistRepository{
 }
 
 @Entity
+@TypeConverters(Converters::class)
 data class Artist(
     @PrimaryKey
-    override val id:Int,
-    override val name:String,
+    val id:String,
+    val name:String,
     val website:String,
-    val join_date:String,
-    override val image:String,
-    override val tracks:List<Track>
-):Topic(id, name, tracks,image)
+    val joindate:String,
+    val image:String,
+    val tracks:List<Track>
+)

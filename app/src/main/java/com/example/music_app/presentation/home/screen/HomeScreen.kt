@@ -34,22 +34,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.music_app.R
-import com.example.music_app.presentation.home.components.ListAlbumsPopular
-import com.example.music_app.presentation.home.components.ListArtistPopular
-import com.example.music_app.ui.components.MusicNotification
+import com.example.music_app.presentation.home.components.AlbumsListPopular
+import com.example.music_app.presentation.home.components.ArtistListPopular
 import com.example.music_app.presentation.home.components.SearchComponent
-import com.example.music_app.ui.theme.BackGround
-import com.example.music_app.ui.theme.UpdateStatusBarColor
+import com.example.music_app.presentation.theme.BackGround
+import com.example.music_app.presentation.theme.UpdateStatusBarColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController:NavHostController) {
+fun HomeScreen(
+    navController:NavHostController,
+) {
     val scrollState = rememberScrollState()
     val songTitle = remember { "" }
     val artistName = remember { "Nghệ sĩ nổi tiếng" }
 //    SongFactory.pause()
-    MusicNotification()
+//    MusicNotification()
     UpdateStatusBarColor()
 
     Scaffold(
@@ -76,9 +77,9 @@ fun HomeScreen(navController:NavHostController) {
 
             SearchComponent()
 
-            ListAlbumsPopular(navController)
+            AlbumsListPopular(navController)
 
-            ListArtistPopular(navController)
+            ArtistListPopular(navController)
         }
     }
 
@@ -105,7 +106,7 @@ fun HeadingHome(){
         Text(
             text = "Xin chào",
             modifier = Modifier,
-            color = Color.Black,
+            color = Color.White,
             fontWeight = FontWeight(500),
             fontSize = 20.sp
         )

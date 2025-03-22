@@ -1,6 +1,5 @@
 package com.example.music_app.presentation.track_play.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,94 +7,61 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.music_app.R
-import com.example.music_app.domain.model.AlbumsRepository
-import com.example.music_app.domain.model.ArtistRepository
+import com.example.music_app.domain.model.Track
 import com.example.music_app.presentation.track_play.components.TabBarSongPlay
-import com.example.music_app.ui.components.ToolbarCustom
+import com.example.music_app.presentation.core.ToolbarCustom
 import com.example.music_app.presentation.track_play.components.ControllerSong
 import com.example.music_app.presentation.track_play.components.PlayerImage
 import com.example.music_app.presentation.track_play.components.ProcessBar
 import com.example.music_app.presentation.track_play.components.TextContent
-import com.example.music_app.ui.components.ImageIcon
-import com.example.music_app.factory.TrackFactory
-import com.example.music_app.factory.TrackFactory.getCurrentPosition
-import com.example.music_app.factory.TrackType
-import com.example.music_app.presentation.topic_detail.screen.CategoryType
-import com.example.music_app.presentation.track_play.components.ActionType
-import com.example.music_app.ui.theme.BackGround
-import com.example.music_app.ui.theme.Shapes
-import kotlinx.coroutines.delay
+import com.example.music_app.presentation.track_play.components.TrackBottomSheetModal
+import com.example.music_app.presentation.core.ImageIcon
+import com.example.music_app.presentation.theme.BackGround
+import com.example.music_app.presentation.theme.Shapes
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrackPlayScreen(
     navController:NavHostController,
-    trackId:Int,
-    viewModel: TrackPlayViewModel = hiltViewModel ()
+    viewModel: TrackPlayViewModel= hiltViewModel(),
     ) {
-    var currentTime = remember { mutableStateOf(0)}
     var isShuffle = remember { mutableStateOf(false) }
     var isFavarite = remember { mutableStateOf(false) }
-
-
-    LaunchedEffect(Unit) {
-//        while(!TrackFactory.stop){
-//            if (TrackFactory.isPlaying){
-//                currentTime.value=getCurrentPosition()
-//            }
-//            delay(1000)
-//        }
-        viewModel.onEvent(ActionType.Start(trackId))
-
-    }
-
-
-
-//    var tracks= listOf<Track>()
-//    var _category= CategoryType.fromValue(category)
-//
-//    when(_category){
-//        is CategoryType.Artist -> tracks = ArtistRepository.artists.find { it->it.id==topicId }!!.tracks //goi usecase getTracksArtist
-//        is CategoryType.Albums-> tracks = AlbumsRepository.albums.find { it->it.id==topicId }!!.tracks //goi usecase getTracksAlbums
-//        null -> TODO()
-//    }
-//    var track = tracks.find { it->it.id==trackId }
-//    var trackSrc = TrackType.TrackUrlType(track!!.audio,track!!.id)
-//
-//    TrackFactory.initialize(LocalContext.current,trackSrc)
-//
-//    if(!TrackFactory.isPlaying){
-//        TrackFactory.play()
-//    }else if(track.id!=TrackFactory.trackCurrent.toString()){
-//        TrackFactory.play()
-//    }
+    val track :Track ? by viewModel.track.collectAsState()
+    val isShowSheetState by viewModel.showSheet.collectAsState(false)
     Column(
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
             .background(BackGround)
     ) {
+        if(isShowSheetState){
+            TrackBottomSheetModal(navController,track, viewModel = viewModel)
+        }
         Box(
             modifier = Modifier
                 .zIndex(1f)
                 .padding(0.dp, 16.dp)
         ) {
-            val downloadToolbar= ImageIcon(R.drawable.download_icon, contentDescription = "download", action = {})
+            val downloadToolbar= ImageIcon(R.drawable.download_24, contentDescription = "download", action = {})
 
             ToolbarCustom(turnBack = true, navController = navController, items = listOf(downloadToolbar))
         }
@@ -111,12 +77,20 @@ fun TrackPlayScreen(
                     .padding(0.dp,62.dp,0.dp,0.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-//                PlayerImage(track)
-//
-//                TextContent(track.name)
+                if(track == null){
+                    CircularProgressIndicator(
+                        modifier = Modifier.width(64.dp),
+                        color = MaterialTheme.colorScheme.secondary,
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                    return
+                }
+                PlayerImage(track?.image)
+                TextContent(track?.name,track?.artist_name)
                 ControllerSong()
 
-//                ProcessBar({},TrackFactory.totalTime!!,currentTime.value.toFloat())
+
+                ProcessBar({})
 
             }
             Row(

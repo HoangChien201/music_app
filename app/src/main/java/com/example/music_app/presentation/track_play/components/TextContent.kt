@@ -10,28 +10,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.music_app.ui.theme.GrayText
+import com.example.music_app.presentation.theme.GrayText
 
 @Composable
-fun TextContent(nameSong: String) {
+fun TextContent(nameSong: String?,nameSinger:String?) {
     Column(
         modifier = Modifier.padding(0.dp,24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         //name song
         Text(
-            text = nameSong,
+            text = nameSong ?:"Tên bài hát",
             fontWeight = FontWeight(600),
             fontSize = 20.sp,
             color = Color.White
 
             )
 //        //name singer
-//        Text(
-//            text = nameSinger,
-//            fontWeight = FontWeight(450),
-//            fontSize = 16.sp,
-//            color = GrayText
-//            )
+        Text(
+            text = nameSinger ?: "Ca sĩ",
+            fontWeight = FontWeight(450),
+            fontSize = 16.sp,
+            color = GrayText
+            )
     }
 }

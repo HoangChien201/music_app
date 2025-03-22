@@ -1,4 +1,4 @@
-package com.example.music_app.ui.components
+package com.example.music_app.presentation.core
 
 class ImageIcon(image:Int,contentDescription:String,action:()->Unit) {
     val image=image;

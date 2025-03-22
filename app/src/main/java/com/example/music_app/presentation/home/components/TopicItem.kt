@@ -25,20 +25,22 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.music_app.R
 import com.example.music_app.destination.TopicDestination
+import com.example.music_app.domain.model.Album
+import com.example.music_app.domain.model.Artist
 import com.example.music_app.domain.model.Topic
-import com.example.music_app.ui.theme.GrayText
-import com.example.music_app.ui.theme.Shapes
+import com.example.music_app.presentation.theme.GrayText
+import com.example.music_app.presentation.theme.Shapes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopicItem(navHostController: NavHostController,topic: Topic,category:String ){
+fun AlbumItem(navHostController: NavHostController,album: Album ){
     Card(
         onClick = {
-            navHostController.navigate(TopicDestination.route +"/$category"+ "/${topic.id}")
+            navHostController.navigate(TopicDestination.route +"/album"+ "/${album.id}")
         },
         modifier = Modifier
             .width(250.dp)
-            .height(280.dp)
+            .height(300.dp)
             .shadow(2.dp, Shapes.large)
             .offset(0.dp,-1.dp),
         shape = Shapes.large
@@ -48,10 +50,11 @@ fun TopicItem(navHostController: NavHostController,topic: Topic,category:String 
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(Color.White),
+                .background(Color.White.copy(alpha = 0.1f))
+                .padding(0.dp,10.dp),
         ) {
             Image(
-                painter = rememberAsyncImagePainter(topic.image),
+                painter = rememberAsyncImagePainter(album.image),
                 contentDescription = "",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -61,12 +64,12 @@ fun TopicItem(navHostController: NavHostController,topic: Topic,category:String 
                 Modifier.padding(16.dp,0.dp)
             ) {
                 Box(modifier = Modifier.padding(0.dp,10.dp)){
-                    Text(text="${topic.tracks.size} bài hát ",
+                    Text(text="${album.tracks.size} bài hát ",
                         fontSize = 13.sp,)
                 }
                 //name category
                 Text(
-                    text = topic.name,
+                    text = album.name,
                     fontSize = 22.sp,
                     color = GrayText,
                     fontWeight = FontWeight(500)
@@ -77,8 +80,65 @@ fun TopicItem(navHostController: NavHostController,topic: Topic,category:String 
     }
 }
 
-//@Preview
-//@Composable
-//fun CategoryItemPreview(){
-//    CategoryItem()
-//}
+@OptIn(ExperimentalMaterial3Api::class)
+
+@Composable
+fun ArtistItem(navHostController: NavHostController,artist: Artist ){
+    Card(
+        onClick = {
+            navHostController.navigate(TopicDestination.route +"/artist"+ "/${artist.id}")
+        },
+        modifier = Modifier
+            .width(250.dp)
+            .height(300.dp)
+            .shadow(2.dp, Shapes.large)
+            .offset(0.dp,-1.dp),
+        shape = Shapes.large
+
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.White.copy(alpha = 0.1f))
+                .padding(0.dp,10.dp),
+        ) {
+            if(artist.image.isNotEmpty()){
+                Image(
+                    painter = rememberAsyncImagePainter(artist.image),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.7f)
+                )
+            }
+            else{
+                Image(
+                    painter = painterResource(id = R.drawable.the_band_show),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.7f)
+                )
+
+            }
+
+            Column(
+                Modifier.padding(16.dp,0.dp)
+            ) {
+                Box(modifier = Modifier.padding(0.dp,10.dp)){
+                    Text(text="${artist.tracks.size} bài hát ",
+                        fontSize = 13.sp,)
+                }
+                //name category
+                Text(
+                    text = artist.name,
+                    fontSize = 22.sp,
+                    color = GrayText,
+                    fontWeight = FontWeight(500)
+                )
+            }
+
+        }
+    }
+}

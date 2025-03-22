@@ -13,19 +13,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.music_app.R
 import com.example.music_app.domain.model.Track
 
 @Composable
-fun PlayerImage(track: Track) {
+fun PlayerImage(url:String?) {
+    Box (
+        modifier = Modifier
+            .width(231.dp)
+            .height(231.dp)
+            .clip(shape = CircleShape)
+            .background(Color.White.copy(alpha = 0.1f))
+    ){
 
-        Image(
-            painter = rememberAsyncImagePainter(track.image),
-            contentDescription = "the band show",
-            modifier = Modifier
-                .width(231.dp)
-                .height(231.dp)
-                .clip(shape = CircleShape)
-        )
+            Image(
+                painter = rememberAsyncImagePainter(url),
+                contentDescription = "the band show",
+                modifier = Modifier
+                    .width(231.dp)
+                    .height(231.dp)
+                    .clip(shape = CircleShape)
+            )
+
+
+    }
+
 }

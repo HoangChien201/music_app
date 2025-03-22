@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.runtime.livedata)
     val nav_version = "2.8.0"
     val retrofix_version = "2.11.0"
     val room_version = "2.6.1"
@@ -89,6 +90,7 @@ dependencies {
 
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
+
     //roomdatabase
     implementation("androidx.room:room-runtime:$room_version")
 
@@ -117,6 +119,8 @@ dependencies {
 
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:$room_version")
+
+
 }
 
 kapt {

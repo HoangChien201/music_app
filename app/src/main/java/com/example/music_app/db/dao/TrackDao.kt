@@ -8,8 +8,8 @@ import com.example.music_app.domain.model.Track
 
 @Dao
 interface TrackDao{
-    @Query("SELECT * FROM track")
-    fun getAll(): List<Track>
+    @Query("SELECT * FROM track LIMIT 10")
+    suspend fun getAll(): List<Track>
 
     @Query("SELECT * FROM track WHERE id = :id")
     suspend fun getById(id: Int): Track

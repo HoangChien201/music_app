@@ -7,8 +7,7 @@ import javax.inject.Inject
 
 class GetTrackUseCase @Inject constructor(private val trackRepo: TrackRepo) {
     suspend operator fun invoke(id: Int): Track {
-        var track=trackRepo.getTrack(id).results[0]
-        return trackRepo.getTrack(id).results[0]
+        return trackRepo.getTrack(id)
     }
 
 }

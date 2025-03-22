@@ -1,7 +1,11 @@
 package com.example.music_app
 
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Build
 import android.os.Bundle
+import android.os.IBinder
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
@@ -14,19 +18,22 @@ import androidx.navigation.navArgument
 import com.example.music_app.destination.HomeDestination
 import com.example.music_app.destination.TopicDestination
 import com.example.music_app.destination.TrackDestination
+import com.example.music_app.factory.TrackService
 import com.example.music_app.presentation.home.screen.HomeScreen
 import com.example.music_app.presentation.topic_detail.screen.TopicDetailScreen
 import com.example.music_app.presentation.track_play.screen.TrackPlayScreen
 import com.example.music_app.presentation.track_play.screen.TrackPlayViewModel
-import com.example.music_app.ui.theme.Music_AppTheme
+import com.example.music_app.presentation.theme.Music_AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
+
             Music_AppTheme {
                 // A surface container using the 'background' color from the theme
                 val navController= rememberNavController()
@@ -53,7 +60,8 @@ class MainActivity : ComponentActivity() {
                         arguments = listOf(navArgument(TrackDestination.trackId) { type = NavType.StringType })
                         ){
                         val trackId= requireNotNull(it.arguments?.getString(TrackDestination.trackId)){"Song id is null"}
-                        TrackPlayScreen(navController, trackId.toInt())
+
+                        TrackPlayScreen(navController)
                     }
                 }
             }
