@@ -12,7 +12,7 @@ VibeBeat is a modern music streaming application built with Kotlin and Jetpack C
 ### **Setup Guide** ###
 1. #### **Clone the repository** ####
 ```
-  git clone https://github.com/yourusername/VibeBeat.git
+  git clone https://github.com/HoangChien201/vibe_beat
   cd VibeBeat
 ```
 2. #### **Open in Android Studio** ####
